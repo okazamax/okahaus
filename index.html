@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oka Haus — A Place to Return to Yourself</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    /* Stone & Sage — Oka Haus brand palette */
+    --night-moss: #1c1f1c;
+    --deep-forest: #2f3530;
+    --sage: #6b7c68;
+    --lichen: #9caa8e;
+    --warm-stone: #c8c0b4;
+    --linen: #f0ebe5;
+
+    /* Semantic aliases */
+    --bg:        var(--night-moss);
+    --bg-mid:    var(--deep-forest);
+    --bg-light:  #383d38;
+    --text:      var(--linen);
+    --accent:    var(--sage);
+    --accent-hi: var(--lichen);
+    --muted:     var(--warm-stone);
+
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans:  'DM Sans', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: 17px;
+    line-height: 1.75;
+    overflow-x: hidden;
+  }
+
+  /* ── GRAIN OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.6;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 3rem;
+    mix-blend-mode: normal;
+  }
+
+  .nav-logo {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    font-weight: 400;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--lichen);
+    text-decoration: none;
+    opacity: 0.9;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--linen);
+    text-decoration: none;
+    opacity: 0.5;
+    transition: opacity 0.3s;
+  }
+
+  .nav-links a:hover { opacity: 1; }
+
+  /* ── THRESHOLD (HERO) ── */
+  .threshold {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 8rem 2rem 6rem;
+    position: relative;
+  }
+
+  .threshold::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1px;
+    height: 80px;
+    background: linear-gradient(to bottom, var(--sage), transparent);
+    opacity: 0.4;
+  }
+
+  .threshold-eyebrow {
+    font-family: var(--sans);
+    font-size: 0.65rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--lichen);
+    opacity: 0.8;
+    margin-bottom: 2.5rem;
+    animation: fadeUp 1.2s ease both;
+  }
+
+  .threshold-headline {
+    font-family: var(--serif);
+    font-size: clamp(2.8rem, 7vw, 6rem);
+    font-weight: 300;
+    line-height: 1.1;
+    max-width: 820px;
+    color: var(--linen);
+    animation: fadeUp 1.2s ease 0.2s both;
+  }
+
+  .threshold-headline em {
+    font-style: italic;
+    color: var(--lichen);
+  }
+
+  .threshold-sub {
+    margin-top: 2.5rem;
+    font-family: var(--sans);
+    font-size: 0.95rem;
+    font-weight: 300;
+    line-height: 2;
+    max-width: 460px;
+    color: var(--linen);
+    opacity: 0.55;
+    animation: fadeUp 1.2s ease 0.4s both;
+  }
+
+  .threshold-cta {
+    margin-top: 3.5rem;
+    display: inline-block;
+    font-family: var(--sans);
+    font-size: 0.68rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--lichen);
+    text-decoration: none;
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 2px;
+    opacity: 0.8;
+    transition: opacity 0.3s;
+    animation: fadeUp 1.2s ease 0.6s both;
+  }
+
+  .threshold-cta:hover { opacity: 1; }
+
+  /* ── DIVIDER ── */
+  .divider {
+    width: 40px;
+    height: 1px;
+    background: var(--sage);
+    opacity: 0.3;
+    margin: 0 auto;
+  }
+
+  /* ── SECTIONS ── */
+  section {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 7rem 2rem;
+  }
+
+  section.wide { max-width: 1000px; }
+  section.full { max-width: 100%; padding-left: 0; padding-right: 0; }
+
+  /* ── MIRROR ── */
+  .mirror {
+    border-left: 1px solid var(--sage);
+    padding-left: 3rem;
+    margin-left: 4rem;
+    position: relative;
+  }
+
+  @media (max-width: 768px) {
+    .mirror { margin-left: 1rem; padding-left: 1.5rem; }
+  }
+
+  .mirror-label {
+    font-family: var(--sans);
+    font-size: 0.62rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--lichen);
+    opacity: 0.7;
+    margin-bottom: 2.5rem;
+  }
+
+  .mirror p {
+    font-family: var(--serif);
+    font-size: clamp(1.3rem, 2.5vw, 1.65rem);
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--linen);
+    opacity: 0.85;
+    margin-bottom: 1.8rem;
+  }
+
+  .mirror p:last-of-type { margin-bottom: 0; }
+
+  /* ── QUESTIONS ── */
+  .questions-section {
+    padding: 6rem 2rem;
+    background: var(--deep-forest);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .questions-section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--sage), transparent);
+    opacity: 0.3;
+  }
+
+  .questions-section::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--sage), transparent);
+    opacity: 0.3;
+  }
+
+  .questions-inner {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .questions-label {
+    font-family: var(--sans);
+    font-size: 0.62rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--lichen);
+    opacity: 0.7;
+    margin-bottom: 4rem;
+    text-align: center;
+  }
+
+  .question-item {
+    padding: 2.2rem 0;
+    border-bottom: 1px solid rgba(156, 170, 142, 0.12);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .question-item.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .question-item:first-of-type { border-top: 1px solid rgba(156, 170, 142, 0.12); }
+
+  .question-num {
+    font-family: var(--sans);
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--sage);
+    opacity: 0.6;
+    margin-bottom: 0.75rem;
+  }
+
+  .question-text {
+    font-family: var(--serif);
+    font-size: clamp(1.2rem, 2.2vw, 1.5rem);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.5;
+    color: var(--linen);
+    opacity: 0.9;
+  }
+
+  /* ── THE WORK ── */
+  .work-label {
+    font-family: var(--sans);
+    font-size: 0.62rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--lichen);
+    opacity: 0.7;
+    margin-bottom: 3rem;
+  }
+
+  .work-headline {
+    font-family: var(--serif);
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+    font-weight: 300;
+    line-height: 1.25;
+    color: var(--linen);
+    margin-bottom: 3rem;
+  }
+
+  .work-body {
+    font-family: var(--sans);
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 2;
+    color: var(--linen);
+    opacity: 0.6;
+  }
+
+  .work-body p { margin-bottom: 1.5rem; }
+  .work-body p:last-child { margin-bottom: 0; }
+
+  /* ── THE THREE EDGES ── */
+  .edges-section { padding: 6rem 2rem; }
+  .edges-inner { max-width: 1000px; margin: 0 auto; }
+  .edges-header { text-align: center; margin-bottom: 5rem; }
+
+  .edges-label {
+    font-family: var(--sans);
+    font-size: 0.62rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--lichen);
+    opacity: 0.7;
+    margin-bottom: 1.5rem;
+  }
+
+  .edges-headline {
+    font-family: var(--serif);
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--linen);
+    opacity: 0.9;
+  }
+
+  .edges-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  @media (max-width: 768px) {
+    .edges-grid { grid-template-columns: 1fr; }
+  }
+
+  .edge-card {
+    background: var(--deep-forest);
+    padding: 3rem 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .edge-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 1px;
+    height: 0;
+    background: var(--sage);
+    transition: height 0.6s ease;
+  }
+
+  .edge-card:hover::before { height: 100%; }
+
+  .edge-num {
+    font-family: var(--serif);
+    font-size: 3rem;
+    font-weight: 300;
+    color: var(--sage);
+    opacity: 0.25;
+    line-height: 1;
+    margin-bottom: 1.5rem;
+  }
+
+  .edge-title {
+    font-family: var(--serif);
+    font-size: 1.35rem;
+    font-weight: 400;
+    color: var(--linen);
+    margin-bottom: 1rem;
+    line-height: 1.3;
+  }
+
+  .edge-desc {
+    font-family: var(--sans);
+    font-size: 0.88rem;
+    font-weight: 300;
+    line-height: 1.85;
+    color: var(--linen);
+    opacity: 0.5;
+  }
+
+  /* ── ABOUT ── */
+  .about-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 7rem 2rem;
+  }
+
+  @media (max-width: 768px) {
+    .about-section { grid-template-columns: 1fr; }
+  }
+
+  .about-image-side {
+    position: relative;
+    padding-right: 4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .about-image-placeholder {
+    width: 100%;
+    aspect-ratio: 3/4;
+    background: var(--deep-forest);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .about-image-placeholder::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--night-moss) 0%, var(--deep-forest) 100%);
+  }
+
+  .about-image-placeholder::after {
+    content: 'MAX';
+    position: absolute;
+    bottom: 1.5rem;
+    left: 1.5rem;
+    font-family: var(--serif);
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    color: var(--lichen);
+    opacity: 0.4;
+  }
+
+  .about-image-note {
+    margin-top: 1.5rem;
+    font-family: var(--sans);
+    font-size: 0.7rem;
+    color: var(--warm-stone);
+    letter-spacing: 0.05em;
+    opacity: 0.5;
+  }
+
+  .about-text-side {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 1rem;
+  }
+
+  .about-label {
+    font-family: var(--sans);
+    font-size: 0.62rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--lichen);
+    opacity: 0.7;
+    margin-bottom: 2rem;
+  }
+
+  .about-headline {
+    font-family: var(--serif);
+    font-size: clamp(1.5rem, 2.5vw, 2rem);
+    font-weight: 300;
+    line-height: 1.35;
+    color: var(--linen);
+    margin-bottom: 2rem;
+  }
+
+  .about-body {
+    font-family: var(--sans);
+    font-size: 0.92rem;
+    font-weight: 300;
+    line-height: 2;
+    color: var(--linen);
+    opacity: 0.55;
+  }
+
+  .about-body p { margin-bottom: 1.3rem; }
+
+  /* ── DOOR (CTA) ── */
+  .door-section {
+    min-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 6rem 2rem;
+    position: relative;
+    background: var(--deep-forest);
+    overflow: hidden;
+  }
+
+  .door-section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--sage), transparent);
+    opacity: 0.3;
+  }
+
+  .door-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(107, 124, 104, 0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .door-label {
+    font-family: var(--sans);
+    font-size: 0.62rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--lichen);
+    opacity: 0.7;
+    margin-bottom: 2.5rem;
+  }
+
+  .door-headline {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 300;
+    line-height: 1.2;
+    max-width: 700px;
+    color: var(--linen);
+    margin-bottom: 2rem;
+  }
+
+  .door-headline em {
+    font-style: italic;
+    color: var(--lichen);
+  }
+
+  .door-sub {
+    font-family: var(--sans);
+    font-size: 0.9rem;
+    font-weight: 300;
+    line-height: 2;
+    color: var(--linen);
+    opacity: 0.45;
+    max-width: 400px;
+    margin-bottom: 3.5rem;
+  }
+
+  .door-btn {
+    display: inline-block;
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--linen);
+    background: var(--sage);
+    text-decoration: none;
+    padding: 1.1rem 2.8rem;
+    transition: background 0.3s, opacity 0.3s;
+    opacity: 0.9;
+  }
+
+  .door-btn:hover {
+    background: var(--lichen);
+    opacity: 1;
+  }
+
+  .door-note {
+    margin-top: 1.5rem;
+    font-family: var(--sans);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    color: var(--linen);
+    opacity: 0.25;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(107, 124, 104, 0.15);
+  }
+
+  .footer-logo {
+    font-family: var(--serif);
+    font-size: 0.9rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--lichen);
+    opacity: 0.5;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .footer-links a {
+    font-family: var(--sans);
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--linen);
+    text-decoration: none;
+    opacity: 0.25;
+    transition: opacity 0.3s;
+  }
+
+  .footer-links a:hover { opacity: 0.6; }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── MARQUEE ── */
+  .marquee-wrap {
+    overflow: hidden;
+    border-top: 1px solid rgba(107, 124, 104, 0.1);
+    border-bottom: 1px solid rgba(107, 124, 104, 0.1);
+    padding: 1.2rem 0;
+  }
+
+  .marquee-track {
+    display: flex;
+    gap: 0;
+    animation: marquee 30s linear infinite;
+    white-space: nowrap;
+  }
+
+  .marquee-item {
+    font-family: var(--serif);
+    font-size: 0.85rem;
+    font-style: italic;
+    color: var(--linen);
+    opacity: 0.15;
+    padding: 0 3rem;
+    flex-shrink: 0;
+  }
+
+  .marquee-item span {
+    color: var(--sage);
+    opacity: 0.4;
+    margin: 0 1rem;
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Oka Haus</a>
+  <ul class="nav-links">
+    <li><a href="#mirror">The Work</a></li>
+    <li><a href="#about">Max</a></li>
+    <li><a href="#door">Begin</a></li>
+  </ul>
+</nav>
+
+<!-- THRESHOLD -->
+<div class="threshold">
+  <p class="threshold-eyebrow">Oka Haus</p>
+  <h1 class="threshold-headline">
+    You already know<br>something has to <em>change.</em>
+  </h1>
+  <p class="threshold-sub">
+    A place to return to yourself — and to stop avoiding what you already know matters.
+  </p>
+  <a href="#mirror" class="threshold-cta">Enter</a>
+</div>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item">shadow work <span>·</span></span>
+    <span class="marquee-item">identity <span>·</span></span>
+    <span class="marquee-item">edge method <span>·</span></span>
+    <span class="marquee-item">courage <span>·</span></span>
+    <span class="marquee-item">transformation <span>·</span></span>
+    <span class="marquee-item">truth <span>·</span></span>
+    <span class="marquee-item">becoming <span>·</span></span>
+    <span class="marquee-item">the work <span>·</span></span>
+    <span class="marquee-item">shadow work <span>·</span></span>
+    <span class="marquee-item">identity <span>·</span></span>
+    <span class="marquee-item">edge method <span>·</span></span>
+    <span class="marquee-item">courage <span>·</span></span>
+    <span class="marquee-item">transformation <span>·</span></span>
+    <span class="marquee-item">truth <span>·</span></span>
+    <span class="marquee-item">becoming <span>·</span></span>
+    <span class="marquee-item">the work <span>·</span></span>
+  </div>
+</div>
+
+<!-- MIRROR — WHO THIS IS FOR -->
+<section id="mirror">
+  <div class="mirror reveal">
+    <p class="mirror-label">Who finds their way here</p>
+
+    <p>
+      You're not failing. By most measurements, you're succeeding — the career, the freedom, the version of yourself you once worked hard to become. And still, Sunday nights carry a particular weight. Something underneath all of it that won't stay quiet.
+    </p>
+
+    <p>
+      You've read the books. Done the therapy. Had the conversations. You understand yourself. And yet understanding hasn't moved you. You're still orbiting the same edges, still choosing the slightly smaller version of things — the safer answer, the more palatable truth, the life that fits inside what people expect.
+    </p>
+
+    <p>
+      You know something is waiting on the other side of the thing you keep not doing. The thing you keep almost saying. The version of yourself you keep postponing.
+    </p>
+
+    <p>
+      You're not here by accident.
+    </p>
+  </div>
+</section>
+
+<!-- QUESTIONS -->
+<div class="questions-section">
+  <div class="questions-inner">
+    <p class="questions-label">Questions that live here</p>
+
+    <div class="question-item">
+      <p class="question-num">01</p>
+      <p class="question-text">What would you do if you knew the version of you that's holding back was just scared — not right?</p>
+    </div>
+
+    <div class="question-item">
+      <p class="question-num">02</p>
+      <p class="question-text">What are you not letting yourself want?</p>
+    </div>
+
+    <div class="question-item">
+      <p class="question-num">03</p>
+      <p class="question-text">If your life were designed by the most courageous version of you — what would be different by Thursday?</p>
+    </div>
+
+    <div class="question-item">
+      <p class="question-num">04</p>
+      <p class="question-text">Whose approval are you still building your life around?</p>
+    </div>
+
+    <div class="question-item">
+      <p class="question-num">05</p>
+      <p class="question-text">What truth are you waiting for the right moment to tell?</p>
+    </div>
+
+    <div class="question-item">
+      <p class="question-num">06</p>
+      <p class="question-text">What part of yourself have you learned to make convenient for others?</p>
+    </div>
+
+    <div class="question-item">
+      <p class="question-num">07</p>
+      <p class="question-text">If the life you're living were a story someone else was reading — would they believe you're the main character?</p>
+    </div>
+
+    <div class="question-item">
+      <p class="question-num">08</p>
+      <p class="question-text">What would it cost you to stop pretending this is enough?</p>
+    </div>
+
+    <div class="question-item">
+      <p class="question-num">09</p>
+      <p class="question-text">When did you decide that wanting too much was dangerous?</p>
+    </div>
+
+    <div class="question-item">
+      <p class="question-num">10</p>
+      <p class="question-text">What are you the most afraid someone will see in you — and what if that's exactly where your power is?</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- THE WORK -->
+<section>
+  <div class="reveal">
+    <p class="work-label">The Work</p>
+    <h2 class="work-headline">
+      This isn't coaching as you've experienced it.<br>
+      This is going somewhere.
+    </h2>
+    <div class="work-body">
+      <p>
+        Most change lives in the head. It stays there as insight, as language, as the very sophisticated story you tell about yourself. Elegant. Articulate. Unchanged.
+      </p>
+      <p>
+        The Edge Method works differently. We go to the places that insight can't reach — the patterns that run beneath awareness, the identities that protect you by keeping you small, the parts of yourself you've locked away because they didn't fit the life you were building.
+      </p>
+      <p>
+        This work is direct. Sometimes uncomfortable. Always in service of you. You'll be seen clearly — not fixed, not managed, but genuinely met — and guided toward the edge of who you've been willing to be.
+      </p>
+      <p>
+        What happens at that edge is yours.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- THE THREE EDGES -->
+<div class="edges-section">
+  <div class="edges-inner">
+    <div class="edges-header reveal">
+      <p class="edges-label">How we work</p>
+      <h2 class="edges-headline">Three dimensions of the same truth.</h2>
+    </div>
+
+    <div class="edges-grid">
+      <div class="edge-card reveal">
+        <div class="edge-num">I</div>
+        <h3 class="edge-title">See Clearly</h3>
+        <p class="edge-desc">
+          Before anything can change, you need an honest map. Not a flattering one — an accurate one. We surface the patterns, the avoidances, the identities you've outgrown, and the stories you mistake for truth.
+        </p>
+      </div>
+      <div class="edge-card reveal">
+        <div class="edge-num">II</div>
+        <h3 class="edge-title">Move Differently</h3>
+        <p class="edge-desc">
+          Insight without action is just a more sophisticated cage. The work always lands somewhere real — a conversation you have, a decision you make, a way you show up that you've never tried before.
+        </p>
+      </div>
+      <div class="edge-card reveal">
+        <div class="edge-num">III</div>
+        <h3 class="edge-title">Become Someone New</h3>
+        <p class="edge-desc">
+          Identity-level change is slow, then sudden. We're not optimizing behavior — we're dissolving the beliefs that made those behaviors feel necessary. This is where real freedom lives.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<div class="about-section">
+  <div class="about-image-side reveal">
+    <div class="about-image-placeholder"></div>
+    <p class="about-image-note">↑ Your photo here — something that feels like a moment, not a shoot.</p>
+  </div>
+  <div class="about-text-side reveal">
+    <p class="about-label">Max — Oka Haus</p>
+    <h2 class="about-headline">
+      I'm not here to give you answers.<br>I'm here to follow you into the questions you've been avoiding.
+    </h2>
+    <div class="about-body">
+      <p>
+        I came to this work through my own version of what you're describing — a life that looked right from the outside while something essential stayed hidden, even from me. The turning point wasn't insight. It was the first time I told a truth I'd been swallowing for years.
+      </p>
+      <p>
+        I've spent three years in the most intimate rooms of people's lives — sitting with the things they've never said out loud, the parts they've made convenient, the versions of themselves they keep almost becoming. This work changes me too.
+      </p>
+      <p>
+        I believe in gentleness and directness as the same thing. I believe the darkness you've been avoiding is exactly where your next life is waiting. And I believe most people are far more capable of courage than they've been allowed to discover.
+      </p>
+      <p>
+        I'm based in Bangkok. I work with people everywhere.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- DOOR -->
+<div class="door-section" id="door">
+  <div class="door-glow"></div>
+  <p class="door-label">Begin</p>
+  <h2 class="door-headline">
+    If something in this page<br>already feels like <em>recognition</em> —
+  </h2>
+  <p class="door-sub">
+    That's enough. You don't need to be ready. You just need to be honest enough to show up.
+  </p>
+  <a href="mailto:hello@okahaus.com" class="door-btn">Start a Conversation</a>
+  <p class="door-note">No forms. No funnels. Just a real conversation.</p>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-logo">Oka Haus</span>
+  <ul class="footer-links">
+    <li><a href="#">Instagram</a></li>
+    <li><a href="#">The Work</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+</footer>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(el => {
+      if (el.isIntersecting) {
+        el.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal, .question-item').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
